@@ -1,19 +1,59 @@
-# AssocEnums
 
-To start your Phoenix server:
 
-  * Install dependencies with `mix deps.get`
-  * Create and migrate your database with `mix ecto.setup`
-  * Start Phoenix endpoint with `mix phx.server`
+Table scolar_ship as p{
+  id int [pk, increment]
+  full_price decimal
+  price_with_discount decimal
+  discount_percentage decimal
+  start_date datetime
+  enrollment_semester text
+  enable boolean
+  }
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+Ref: course.scolar_ship_id > scolar_ship.id
 
-Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
+Table course {
+  id int [pk, increment]
+  name text
+  kind text
+  level text
+  shift text
+  scolar_ship_id integer
+}
 
-## Learn more
 
-  * Official website: https://www.phoenixframework.org/
-  * Guides: https://hexdocs.pm/phoenix/overview.html
-  * Docs: https://hexdocs.pm/phoenix
-  * Forum: https://elixirforum.com/c/phoenix-forum
-  * Source: https://github.com/phoenixframework/phoenix
+Table campus {
+  id int [pk, increment]
+  name text
+  city text
+  course_id integer
+  university_id integer
+}
+
+Ref: campus.course_id > course.id
+
+Table university {
+  id int [pk, increment]
+  name text
+  score decimal
+  logo_url decimal
+  campus_id integer
+}
+
+Ref: university.campus_id > campus.id
+
+
+
+
+
+//Ref: students.personal_id > personals.id
+
+
+
+
+❯ mix phx.gen.schema Course courses name kind level shift campus_id:references:campus
+https://hexdocs.pm/phoenix/Mix.Tasks.Phx.Gen.Schema.html
+https://jsonlint.com
+
+
+❯ mix phx.new assoc_enums --no-html --no-webpack --binary-id
